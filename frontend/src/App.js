@@ -1,17 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import WebRequestButton from './WebRequestButton';
-import NavBar from './navBar';
-
-function App() {
-  return (
-    <div className="App">
-      <NavBar />
-      <h1>Web Request Button</h1>
-      <WebRequestButton />
-    </div>
-  );
-=======
 import {
     BrowserRouter,
     Routes,
@@ -27,11 +14,10 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Patients />} />
-                <Route path="/profile/:id" element={<Profile/>} />
+                <Route path="Profile/:id" element={<Profile/>} />
             </Routes>
         </BrowserRouter>
     );
->>>>>>> 9409cfe (react nonsense)
 }
 export default App;
 /*
