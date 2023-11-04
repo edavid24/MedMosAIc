@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './NavBar.css';
 
 const NavBar = () => {
+  const [hoveredButtonId, setHoveredButtonId] = useState(null);
+
   const patients = [
     { name: 'John Doe', id: 1 },
     { name: 'Cocaine Bear', id: 2 },
@@ -9,12 +11,20 @@ const NavBar = () => {
   ];
 
   const listPatients = patients.map(patient => (
-    <li key={patient.id} style={{
-      paddingLeft: '130px',
-      margin: 0,
-      listStyle: 'none',
-      float: 'left',
-    }}>
+    <li
+      key={patient.id}
+      style={{
+        padding: '10px',
+        height: '60px',
+        marginLeft: '130px',
+        margin: 0,
+        listStyle: 'none',
+        float: 'left',
+        backgroundColor: patient.id === hoveredButtonId ? '#55A0DD' : 'transparent', // Apply black background to the hovered button
+      }}
+      onMouseEnter={() => setHoveredButtonId(patient.id)}
+      onMouseLeave={() => setHoveredButtonId(null)}
+    >
       Patient {patient.id}: {patient.name}
     </li>
   ));
@@ -28,11 +38,11 @@ const NavBar = () => {
   };
 
   const titleStyles = {
-    paddingLeft: '20px',
+    paddingLeft: '2%',
     paddingTop: '20px',
-    paddingBot: 0,
+    paddingBottom: '15px',
     margin: 0,
-    width: '100%',
+    width: '98%',
     height: '110px',
     backgroundColor: '#508AA8',
     fontSize: '70px',
@@ -40,7 +50,7 @@ const NavBar = () => {
   };
 
   const topBarStyles = {
-    paddingTop: '10px',
+    padding: 0,
     margin: 0,
     width: '100%',
     height: '60px',
