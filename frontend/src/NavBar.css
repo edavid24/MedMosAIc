@@ -27,3 +27,17 @@
     font-size: 40px;
     overflow: hidden;
 }
+
+.listItem {
+    padding-left: 130px;
+    margin: 0;
+    list-style: none;
+    float: left;
+    color: black;
+    transition: background-color 0.3s; /* Add a transition effect for smooth hover */
+}
+  
+.listItem:hover {
+    background-color: black;
+    color: white; /* Change text color on hover for better contrast */
+}

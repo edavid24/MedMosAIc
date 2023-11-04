@@ -1,7 +1,13 @@
 import React from 'react';
-import styles from './page.module.css';
+import styles from './NavBar.css';
 
-function SideBar({ patients }) {
+const NavBar = () => {
+  const patients = [
+    { name: 'John Doe', id: 1 },
+    { name: 'Cocaine Bear', id: 2 },
+    { name: 'Some Weed Addict', id: 3 },
+  ];
+
   const listPatients = patients.map(patient => (
     <li key={patient.id} style={{
       paddingLeft: '130px',
@@ -12,24 +18,53 @@ function SideBar({ patients }) {
       Patient {patient.id}: {patient.name}
     </li>
   ));
-  return <ul>{listPatients}</ul>;
-}
 
-export default function Home() {
-  const patients = [
-    { name: 'John Doe', id: 1 },
-    { name: 'Cocaine Bear', id: 2 },
-    { name: 'Some Weed Addict', id: 3 },
-  ];
+  const mainStyles = {
+    padding: 0,
+    margin: 0,
+    width: '100%',
+    backgroundColor: '#9DD1F1',
+    color: 'white',
+  };
+
+  const titleStyles = {
+    paddingLeft: '20px',
+    paddingTop: '20px',
+    paddingBot: 0,
+    margin: 0,
+    width: '100%',
+    height: '110px',
+    backgroundColor: '#508AA8',
+    fontSize: '70px',
+    textAlign: 'left',
+  };
+
+  const topBarStyles = {
+    paddingTop: '10px',
+    margin: 0,
+    width: '100%',
+    height: '60px',
+    fontSize: '40px',
+    overflow: 'hidden',
+  };
+
+  const menuBar = {
+    padding: 0,
+    margin: 0,
+  };
 
   return (
-    <div className={styles.main}>
-      <div className={styles.titleName}>
+    <div style={mainStyles}>
+      <div style={titleStyles}>
         Team Name
       </div>
-      <div className={styles.topBar}>
-        <SideBar patients={patients} />
+      <div style={topBarStyles}>
+        <ul style={menuBar}>
+          {listPatients}
+        </ul>
       </div>
     </div>
   );
-}
+};
+
+export default NavBar;
