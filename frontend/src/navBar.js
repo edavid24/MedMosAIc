@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styles from './NavBar.css';
 
 const NavBar = () => {
   const [hoveredButtonId, setHoveredButtonId] = useState(null);
