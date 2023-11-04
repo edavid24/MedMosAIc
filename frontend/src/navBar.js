@@ -66,7 +66,7 @@ const NavBar = () => {
   return (
     <div style={mainStyles}>
       <div style={titleStyles}>
-        Team Name
+      MedMosAIc
       </div>
       <div style={topBarStyles}>
         <ul style={menuBar}>
