@@ -6,15 +6,17 @@ function Patients() {
     return (
         <div className="App">
             <Logo text="MedMosaic" />
-            <PatientCard
-                name="John Doe"
-                number="3B"
-                details="asfdafjeaoifejafj"
-            /><PatientCard
-                name="John Doe"
-                number="3B"
-                details="asfdafjeaoifejafj"
-            />
+            <div style={{ "margin": "5%", "margin-top": "2%"}}>
+                <PatientCard
+                    name="Joe Mama"
+                    number="3B"
+                    details="He's joe mama gotem"
+                /><PatientCard
+                    name="Adam"
+                    number="50A"
+                    details="The real OG"
+                />
+            </div>
         </div>
     );
 }
