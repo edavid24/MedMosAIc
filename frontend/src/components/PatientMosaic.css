@@ -1,20 +1,54 @@
 .patient-mosaic {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.patient-box {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
+    width: 30%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    border: 0px !important;
 }
 
+.patient-mosaic div {
+    display:flex;
+    align-items: center; 
+    padding: 30px;
+    font-size: 20pt;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+#patient-name {
+    height: 100px;
+    width: 90%;
+    font-size: 40pt;
+    border: 2px solid #000;
+    border-radius: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#drugs {
+    height: 100px;
+    font-size: 40pt;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
 .patient-info {
     flex: 1;
+}
+
+.triplet {
+    border: 2px solid #000;
+    border-radius: 10px;
+    border-color: black;
+    width: 32%;
+}
+
+.triplet-container {
+    display:flex;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { XMLParser } from "fast-xml-parser";
+import './PatientMosaic.css'; // Create the corresponding CSS file
 
 function WebRequestButton() {
     const [drugName, setDrug] = useState("");
@@ -18,7 +19,7 @@ function WebRequestButton() {
             GETID: `/REST/drugs.xml?name=${name}`,
             GETINTERACTION: `/REST/interaction/list.json?rxcuis=${ids}&sources=ONCHigh`
         }
-        return BASE_URL + endpoints[endpoint]; 
+        return BASE_URL + endpoints[endpoint];
     }
 
     const makeRequest = () => {
@@ -36,22 +37,22 @@ function WebRequestButton() {
                 fetch(endpointURL("GETINTERACTION", "", id1 + '+' + id2))
                     .then((res) => res.json())
                     .then((bob) => {
-            
 
-                    if (!("fullInteractionTypeGroup" in bob)) {
-                        setResponseData("No warnings!"); // Update the state with the response data
-                        setButtonText('Request Completed');
-                        return;
-                    }
-                    bob = bob.fullInteractionTypeGroup[0]
 
-                    if (!("fullInteractionType" in bob)) {
-                        setResponseData("No warnings!")
+                        if (!("fullInteractionTypeGroup" in bob)) {
+                            setResponseData("No warnings!"); // Update the state with the response data
+                            setButtonText('Request Completed');
+                            return;
+                        }
+                        bob = bob.fullInteractionTypeGroup[0]
+
+                        if (!("fullInteractionType" in bob)) {
+                            setResponseData("No warnings!")
+                            setButtonText('Request Completed');
+                            return;
+                        }
+                        setResponseData(bob.fullInteractionType[0].comment);
                         setButtonText('Request Completed');
-                        return;
-                    }
-                    setResponseData(bob.fullInteractionType[0].comment);
-                    setButtonText('Request Completed');
 
 
                     })
@@ -62,12 +63,14 @@ function WebRequestButton() {
                 setButtonText('Request Failed');
             });
     };
-    
+
     return (
-        <div>
+        <div id='drugs'>
             <input onChange={handleChange}></input>
             <button onClick={makeRequest}>{buttonText}</button>
-            <p>Response Data: {JSON.stringify(responseData)}</p>
+            <div>{responseData}</div>
+            <div>
+            </div>
         </div>
     );
 }
