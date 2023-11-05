@@ -1,0 +1,18 @@
+
+.checklist {
+    font-size: 24pt;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20pt;
+}
+
+.checkbox {
+    transform: scale(2.0);
+}
+.checkmark {
+    margin-right: 30px;
+}
+.listdown {
+    display: flex;
+    flex-direction: column;
+}

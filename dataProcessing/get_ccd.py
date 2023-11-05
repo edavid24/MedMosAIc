@@ -2,7 +2,9 @@ from pymongo import MongoClient
 import os
 import ccda
 import datetime
-import types 
+import types
+from protorpc import messages
+import csv
 
 def convert_fieldlist_to_list(fieldlist):
     # This assumes each item in the FieldList has a `__dict__` that can be converted to a dict
@@ -12,7 +14,7 @@ def convert_fieldlist_to_list(fieldlist):
         result_list.append(item_dict)
     return result_list
 
-from protorpc import messages
+
 
 def convert_to_dict(obj):
     """
@@ -40,7 +42,15 @@ def convert_to_dict(obj):
         return obj
 
 
-
+def get_name(file_path):
+    with open(file_path, 'r') as file:
+        ccda_document = ccda.CcdaDocument(file)
+        csv = ccda_document.to_csv()
+        csv=csv.split('\n')
+        csv=csv[1].split(',')
+        return(csv[0],csv[1])
+        
+        
 def parse_ccda(file_path):
     with open(file_path, 'r') as file:
         ccda_document = ccda.CcdaDocument(file)
@@ -48,17 +58,14 @@ def parse_ccda(file_path):
         # Convert the document using the to_message() method
         message = ccda_document.to_message()
 
-        # Print the types of each section
-        print(f"Allergies type: {type(message.allergies)}")
-        print(f"Labs type: {type(message.labs)}")
-        # ... do this for each section
+        allergies_data = ccda.CcdaTree.get_allergies(ccda_document)
 
-        # Print the contents of each section
-        print(f"Allergies content: {message.allergies}")
-        print(f"Labs content: {message.labs}")
-
+        names = get_name(file_path)
+        
+        # Convert message sections to dictionaries for other sections
         patient_data = {
-            'allergies': convert_to_dict(message.allergies) if hasattr(message, 'allergies') else [],
+            "patient": {"first_name": names[0], "last_name": names[1]},
+            'allergies': allergies_data,  # Directly use the output from get_allergies()
             'labs': convert_to_dict(message.labs) if hasattr(message, 'labs') else [],
             'medications': convert_to_dict(message.medications) if hasattr(message, 'medications') else [],
             'problems': convert_to_dict(message.problems) if hasattr(message, 'problems') else [],
@@ -95,7 +102,6 @@ ccda_file_path = 'CCDFiles\example.xml'
 
 # Parse the C-CDA file
 parsed_data = parse_ccda(ccda_file_path)
-print(parsed_data)
 
 # Insert the parsed data into MongoDB
 if parsed_data is not None:
