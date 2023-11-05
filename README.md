@@ -19,5 +19,3 @@ We start with a parser that takes in real medical data from real CCDs. We then s
 - PythonAnywhere
 - Python + Requests + Flask
 - National Library of Medicine: Drug Interaction API
-
-## Don't Believe Us? Try it Yourself
