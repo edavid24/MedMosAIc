@@ -3,7 +3,7 @@
     border-radius: 8px;
     height: 150px;
     padding: 1%;
-    width: 42%;
+    width: 42.5%;
     margin-bottom: 30px;
     margin-right: 5.04%;
 
@@ -19,9 +19,8 @@
 }
 
 .patient-card.dark-mode:hover{
-  border-width: 7px;
-  border-color: #1C5A9B;
-  background-color: #75B3E6;
+    border-color: #1C5A9B;
+    background-color: #75B3E6;
 }
 
 .patient-card:hover {
@@ -34,7 +33,7 @@
     margin-top: 20px;
     width: 35%;
 
-    font-size: 130px;
+    font-size: 125px;
     font-weight: bold;
     color: #007BFF; /* Blue color */
     margin-right: 10px;
@@ -48,7 +47,7 @@
     padding: 0;
     margin-top: 10px;
     width: 60%;
-    font-size: 80px;
+    font-size: 65px;
     font-weight: bold;
     color: #333; /* Dark gray color */
 
