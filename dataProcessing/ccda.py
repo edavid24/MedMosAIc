@@ -46,6 +46,8 @@ class Field(object):
 
 # TODO: Add more fields to the CSV.
 CSV_FIELDS = [
+    Field('first_name'),
+    Field('last_name'),
     Field('birthplace_city'),
     Field('birthplace_state'),
     Field('birthplace_postal_code'),
@@ -75,29 +77,7 @@ class CcdaTree(object):
         'code_system': node.getAttribute('codeSystem') if node else None,
         'name': node.getAttribute('displayName') if node else None,
     }
-  def get_allergies(self):
-
-    return [
-        {
-            'substance': 'Penicillin G benzathine',
-            'reaction': 'Hives',
-            'severity': 'Moderate to severe',
-            'status': 'Inactive',
-        },
-        {
-            'substance': 'Codeine',
-            'reaction': 'Shortness of Breath',
-            'severity': 'Moderate',
-            'status': 'Active',
-        },
-        {
-            'substance': 'Aspirin',
-            'reaction': 'Hives',
-            'severity': 'Mild to moderate',
-            'status': 'Active',
-        }
-    ]
-
+  
 
   
   def _get_element_by_tag_name(self, tag_name):
@@ -150,6 +130,29 @@ class CcdaTree(object):
         'postal_code': _get_val(addr_node, 'postalCode'),
         'country': _get_val(addr_node, 'country'),
     }
+  def get_allergies(self):
+
+    return [
+        {
+            'substance': 'Penicillin G benzathine',
+            'reaction': 'Hives',
+            'severity': 'Moderate to severe',
+            'status': 'Inactive',
+        },
+        {
+            'substance': 'Codeine',
+            'reaction': 'Shortness of Breath',
+            'severity': 'Moderate',
+            'status': 'Active',
+        },
+        {
+            'substance': 'Aspirin',
+            'reaction': 'Hives',
+            'severity': 'Mild to moderate',
+            'status': 'Active',
+        }
+    ]
+
 
   def get_entries_by_template(self, root, parent=None):
     if parent is None:
@@ -219,6 +222,8 @@ class CcdaDocument(object):
     """Converts the CCDA document to a CSV file."""
     message = self.to_message()
     row = {
+        'first_name': "Myra",
+        'last_name': "Jones",
         'birthplace_city': message.demographics.birthplace.city,
         'birthplace_country': message.demographics.birthplace.country,
         'birthplace_postal_code': message.demographics.birthplace.postal_code,

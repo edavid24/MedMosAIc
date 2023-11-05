@@ -2,7 +2,9 @@ from pymongo import MongoClient
 import os
 import ccda
 import datetime
-import types 
+import types
+from protorpc import messages
+import csv
 
 def convert_fieldlist_to_list(fieldlist):
     # This assumes each item in the FieldList has a `__dict__` that can be converted to a dict
@@ -12,7 +14,7 @@ def convert_fieldlist_to_list(fieldlist):
         result_list.append(item_dict)
     return result_list
 
-from protorpc import messages
+
 
 def convert_to_dict(obj):
     """
@@ -40,7 +42,15 @@ def convert_to_dict(obj):
         return obj
 
 
-
+def get_name(file_path):
+    with open(file_path, 'r') as file:
+        ccda_document = ccda.CcdaDocument(file)
+        csv = ccda_document.to_csv()
+        csv=csv.split('\n')
+        csv=csv[1].split(',')
+        return(csv[0],csv[1])
+        
+        
 def parse_ccda(file_path):
     with open(file_path, 'r') as file:
         ccda_document = ccda.CcdaDocument(file)
@@ -50,8 +60,11 @@ def parse_ccda(file_path):
 
         allergies_data = ccda.CcdaTree.get_allergies(ccda_document)
 
+        names = get_name(file_path)
+        
         # Convert message sections to dictionaries for other sections
         patient_data = {
+            "patient": {"first_name": names[0], "last_name": names[1]},
             'allergies': allergies_data,  # Directly use the output from get_allergies()
             'labs': convert_to_dict(message.labs) if hasattr(message, 'labs') else [],
             'medications': convert_to_dict(message.medications) if hasattr(message, 'medications') else [],
