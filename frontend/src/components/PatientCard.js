@@ -11,7 +11,6 @@ function PatientCard({ number, name, id, details }) {
             <div className={`patient-card ${darkMode ? 'dark-mode' : ''}`}>
                 <div className={`patient-name ${darkMode ? 'dark-mode' : ''}`}>{name}</div>
                 <div className="patient-number">{number}</div>
-                <div className="patient-details">{details}</div>
             </div>
         </Link>
     );
