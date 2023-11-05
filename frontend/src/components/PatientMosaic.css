@@ -1,10 +1,15 @@
 .patient-mosaic {
     display: flex;
+    flex-direction: column;
     width: 30%;
     flex-wrap: wrap;
-    justify-content: flex-start;
     gap: 10px;
-    border: 0px !important;
+    font-size: 18pt;
+}
+
+.patient-mosaic p {
+    margin: 0px;
+    text-align: left;
 }
 
 .patient-mosaic div {
@@ -32,9 +37,26 @@
 #drugs {
     height: 100px;
     font-size: 40pt;
-    padding-top: 50px;
-    padding-bottom: 10px;
+    font-size: 18pt;
 }
+
+#drugName {
+    border: 2px solid black;
+    border-radius: 10px 0px 0px 10px;
+    font-size: 20pt;
+    outline:none;
+    width:70%
+}
+
+.submit {
+    font-size: 20pt;
+    border: 2px solid black;
+    border-radius: 0px 10px 10px 0px;
+    background-color: white;
+    box-shadow: none;
+    width: 20%
+}
+
 .patient-info {
     flex: 1;
 }
@@ -43,12 +65,34 @@
     border: 2px solid #000;
     border-radius: 10px;
     border-color: black;
-    width: 32%;
+    padding: 30px;
+    flex: 1;
+    transition: flex 300ms linear;
 }
 
 .triplet-container {
     display:flex;
+    flex-flow: row;
     justify-content: space-between;
-    padding-left: 5%;
-    padding-right: 5%;
+    gap: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.hide {
+    border: none;
+    flex: 0.000001;
+    padding: 0px;
+}
+.hide * {
+    display: none;
+}
+
+table {
+    border: 2px solid black;
+    width: 90%;
+}
+
+h2 {
+    margin-top: 0px;
+    font-size: 20pt;
 }
