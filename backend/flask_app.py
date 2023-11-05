@@ -1,8 +1,12 @@
 import requests
 import config
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 api_key = config.api_key
 
@@ -12,6 +16,7 @@ api_key = config.api_key
 
 
 @app.route('/patients/<patient_id>', methods=['PUT'])
+@cross_origin()
 def update_patient(patient_id):
     data = request.get_json()
     
@@ -24,7 +29,7 @@ def update_patient(patient_id):
 
     payload = {
     "dataSource": "Cluster0",
-    "database": "test_medical_data",
+    "database": "medical_data",
     "collection": "people",
     "filter": {"patient_id": patient_id},
     "replacement": data
@@ -43,6 +48,7 @@ def update_patient(patient_id):
 
 # Delete a Patient (DELETE)
 @app.route('/patients/<patient_id>', methods=['DELETE'])
+@cross_origin()
 def delete_patient(patient_id):
 
     url = "https://data.mongodb-api.com/app/data-eiten/endpoint/data/v1/action/deleteOne"
@@ -54,7 +60,7 @@ def delete_patient(patient_id):
 
     payload = {
     "dataSource": "Cluster0",
-    "database": "test_medical_data",
+    "database": "medical_data",
     "collection": "people",
     "filter": {"patient_id": patient_id}
     # "filter": { "_id": { "$oid": patient_id } }
@@ -80,6 +86,7 @@ def delete_patient(patient_id):
 
 
 @app.route('/addpatients', methods=['POST'])
+@cross_origin()
 def insert_patient():
 
     print(request)
@@ -96,7 +103,7 @@ def insert_patient():
         }
         payload = {
         "dataSource": "Cluster0",
-        "database": "test_medical_data",
+        "database": "medical_data",
         "collection": "people",
         "document": data
         }
@@ -121,6 +128,7 @@ def insert_patient():
 
 
 @app.route('/patients', methods=['GET'])
+@cross_origin()
 def get_patients():
     
     url = "https://data.mongodb-api.com/app/data-eiten/endpoint/data/v1/action/find"
@@ -132,7 +140,7 @@ def get_patients():
 
     payload = {
     "dataSource": "Cluster0",
-    "database": "test_medical_data",
+    "database": "medical_data",
     "collection": "people",
     "filter": {}
     }
@@ -150,12 +158,9 @@ def get_patients():
 
 
 
-
-# y3nMbdJqOAVaexHWXedyM9iYhmQJZ9uPHQqXi9jEj7kCCpDAbTRy6B0IGKJKaxvD
-# Set as variable before pushing to github
-
 #Get info for a patient via patient id
 @app.route('/patients/<patient_id>', methods=['GET'])
+@cross_origin()
 def get_patient(patient_id):
 
     url = "https://data.mongodb-api.com/app/data-eiten/endpoint/data/v1/action/findOne"
@@ -167,7 +172,7 @@ def get_patient(patient_id):
 
     payload = {
     "dataSource": "Cluster0",
-    "database": "test_medical_data",
+    "database": "medical_data",
     "collection": "people",
     "filter": { "patient_id": patient_id }
     }
@@ -188,4 +193,3 @@ def get_patient(patient_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
