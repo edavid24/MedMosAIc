@@ -18,6 +18,6 @@ umm
 - React.js
 - PythonAnywhere
 - Python + Requests + Flask
-- The Solar System OpenData API
+- National Library of Medicine: Drug Interaction API
 
 ## Don't Believe Us? Try it Yourself
