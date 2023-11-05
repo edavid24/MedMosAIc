@@ -9,33 +9,42 @@ function PatientBoxes({ patientData }) {
     const handleButtonClick = () => {
         setIsHidden(true);
     };
+
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+
     return (
         <div>
-            <div id="patient-name">{patientData.name}</div>
+            <div id="patient-name" className={`${darkMode ? 'dark-mode' : ''}`}>{patientData.name}</div>
             <div className="triplet-container"> 
-                <div className="triplet patient-mosaic">
-                    <h2>Patient Information</h2>
+                <div id="patientInfo" className={`halfTriplet ${isHidden ? 'full' : ''} ${darkMode ? 'dark-mode' : ''}`}>
+                    <h2>Information</h2>
                     {Object.keys(patientData.info).map((property, index) => (
                         <p
                             key={index}
                         >
-                            <span style={{"font-weight" : "bold"}}>{property}:</span> {patientData.info[property]}
+                            <span className={`importantInfo ${darkMode ? 'dark-mode' : ''}`}>{property}:</span> 
+                            <span className={`otherInfo ${darkMode ? 'dark-mode' : ''}`}>{patientData.info[property]}</span>
                         </p>
                     ))}
-                    <h2>Medical History</h2>
+                </div>
+                
+                <div className={`triplet ${isHidden ? 'hide' : ''} ${darkMode ? 'dark-mode' : ''}`} id='editor'>
+                        <button onClick={handleButtonClick}>DISAPPEAR</button>
+                        <WebRequestButton />
+                </div>
+                <div className={`triplet ${darkMode ? 'dark-mode' : ''}`}>
+                    <Checklist />
+                </div>
+
+                <div id="medicalHistory" className={`halfTriplet ${isHidden ? 'full' : ''} ${isHidden ? 'spaceLeft' : ''} ${darkMode ? 'dark-mode' : ''}`}>
+                    <h2>History</h2>
                     <li>
                         <ul>
                             LEAN
                         </ul>
                     </li>
                 </div>
-                <div className='triplet'>
-                    <Checklist />
-                </div>
-                <div className={`triplet ${isHidden ? 'hide' : ''}`} id='editor'>
-                    <button onClick={handleButtonClick}>DISAPPEAR</button>
-                    <WebRequestButton />
-                </div>
+                
             </div>
         </div>
     );
