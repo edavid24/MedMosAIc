@@ -10,7 +10,7 @@ MedMosaic has many features. The first is a comprehensive list of all the medici
 factors. Finally, MedMosaic also has a checklist for all of the meds that need to be taken by each patient, with information as to when and how the medication should be administered.
 
 ## How We Do It
-umm
+We start with a parser that takes in real medical data from real CCDs. We then store this information in MongoDB Atlas, where our backend grabs it and passes it to our frontend as needed. If a doctor tries to enter a new drug, an API call is made to the NLM Drug Interaction API to ensure that it is safe.
 
 ## Built With
 - HTML/JS/CSS
