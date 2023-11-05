@@ -97,7 +97,19 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
     text-align: left;
     margin-left: 5%;
     color: #333;
-    /* Add any additional styling you want */
+}
+
+.logo.dark-mode {
+    color: white;
+}
+
+body {
+    background-color: #fff;
+}
+  
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #333;
 }
 
 a {
