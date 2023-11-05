@@ -245,25 +245,6 @@ class CcdaDocument(object):
     allergy_data = self._tree.get_allergies()
     doc.allergies = []
 
-    for allergy_info in allergy_data:
-        # You need to determine the correct keys expected by the messages.Code constructor
-        # Here we assume that 'code' is a required field.
-        substance_code = allergy_info['substance']
-        reaction_code = allergy_info['reaction']
-        severity_code = allergy_info['severity']
-        status_code = allergy_info.get('status', 'Unknown')  # Default to 'Unknown' if not present
-
-        allergy_message = messages.Allergy(
-            substance=messages.Code(code=substance_code),
-            reaction=messages.Code(code=reaction_code),
-            severity=messages.Code(code=severity_code),
-            status=messages.Code(code=status_code)  # Assuming status is optional and has a 'code' field
-        )
-        doc.allergies.append(allergy_message)
-
-
-
-
     # Demographics.
     doc.demographics = messages.Demographic()
     doc.demographics.dob = self._tree.get_dob()

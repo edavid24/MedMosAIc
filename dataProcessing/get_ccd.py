@@ -48,17 +48,11 @@ def parse_ccda(file_path):
         # Convert the document using the to_message() method
         message = ccda_document.to_message()
 
-        # Print the types of each section
-        print(f"Allergies type: {type(message.allergies)}")
-        print(f"Labs type: {type(message.labs)}")
-        # ... do this for each section
+        allergies_data = ccda.CcdaTree.get_allergies(ccda_document)
 
-        # Print the contents of each section
-        print(f"Allergies content: {message.allergies}")
-        print(f"Labs content: {message.labs}")
-
+        # Convert message sections to dictionaries for other sections
         patient_data = {
-            'allergies': convert_to_dict(message.allergies) if hasattr(message, 'allergies') else [],
+            'allergies': allergies_data,  # Directly use the output from get_allergies()
             'labs': convert_to_dict(message.labs) if hasattr(message, 'labs') else [],
             'medications': convert_to_dict(message.medications) if hasattr(message, 'medications') else [],
             'problems': convert_to_dict(message.problems) if hasattr(message, 'problems') else [],
@@ -95,7 +89,6 @@ ccda_file_path = 'CCDFiles\example.xml'
 
 # Parse the C-CDA file
 parsed_data = parse_ccda(ccda_file_path)
-print(parsed_data)
 
 # Insert the parsed data into MongoDB
 if parsed_data is not None:
