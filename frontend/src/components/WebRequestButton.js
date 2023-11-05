@@ -27,7 +27,7 @@ function WebRequestButton() {
             .then((response) => response.text())
             .then((xml) => {
                 var drugs = [];
-                while (xml.search("<conceptProperties>") != -1) {
+                while (xml.search("<conceptProperties>") !== -1) {
                     drugs.push(parser.parse(xml.substring(xml.indexOf("<conceptProperties>"), xml.indexOf("</conceptProperties>")) + "</conceptProperties>"))
                     xml = xml.substring(xml.indexOf("</conceptProperties>") + 15, xml.length);
                 }

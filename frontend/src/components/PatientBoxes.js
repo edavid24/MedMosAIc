@@ -9,11 +9,14 @@ function PatientBoxes({ patientData }) {
     const handleButtonClick = () => {
         setIsHidden(true);
     };
+
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+
     return (
         <div>
-            <div id="patient-name">{patientData.name}</div>
+            <div id="patient-name" className={`${darkMode ? 'dark-mode' : ''}`}>{patientData.name}</div>
             <div className="triplet-container"> 
-                <div className="halfTriplet">
+                <div className={`halfTriplet ${darkMode ? 'dark-mode' : ''}`}>
                     <h2>Information</h2>
                     {Object.keys(patientData.info).map((property, index) => (
                         <p
@@ -24,15 +27,15 @@ function PatientBoxes({ patientData }) {
                     ))}
                 </div>
                 
-                <div className={`triplet ${isHidden ? 'hide' : ''}`} id='editor'>
+                <div className={`triplet ${isHidden ? 'hide' : ''} ${darkMode ? 'dark-mode' : ''}`} id='editor'>
                         <button onClick={handleButtonClick}>DISAPPEAR</button>
                         <WebRequestButton />
                 </div>
-                <div className='triplet'>
+                <div className={`triplet ${darkMode ? 'dark-mode' : ''}`}>
                     <Checklist />
                 </div>
 
-                <div className="halfTriplet last">
+                <div className={`halfTriplet ${darkMode ? 'dark-mode' : ''}`}>
                     <h2>History</h2>
                     <li>
                         <ul>
