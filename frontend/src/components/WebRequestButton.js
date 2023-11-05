@@ -4,7 +4,7 @@ import './PatientMosaic.css'; // Create the corresponding CSS file
 
 function WebRequestButton() {
     const [drugName, setDrug] = useState("");
-    const [buttonText, setButtonText] = useState('Check Drug');
+    const [buttonText, setButtonText] = useState('Add');
     const [responseData, setResponseData] = useState('');
     const parser = new XMLParser();
     const BASE_URL = " https://rxnav.nlm.nih.gov"
@@ -66,10 +66,27 @@ function WebRequestButton() {
 
     return (
         <div id='drugs'>
-            <input onChange={handleChange}></input>
-            <button onClick={makeRequest}>{buttonText}</button>
+            <h2>Edit Prescriptions</h2>
+            <input id="drugName" onChange={handleChange}></input>
+            <button className="submit" onClick={makeRequest}>{buttonText}</button>
             <div>{responseData}</div>
             <div>
+                Dosage:
+                <input></input>
+                Time:
+                <input></input>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>
+                            Heroin
+                        </th>
+                        <th>
+                            10mg
+                        </th>
+                    </tr>
+                </table> 
             </div>
         </div>
     );
