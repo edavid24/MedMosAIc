@@ -16,7 +16,7 @@ function PatientBoxes({ patientData }) {
         <div>
             <div id="patient-name" className={`${darkMode ? 'dark-mode' : ''}`}>{patientData.name}</div>
             <div className="triplet-container"> 
-                <div className={`halfTriplet ${darkMode ? 'dark-mode' : ''}`}>
+                <div id="patientInfo" className={`halfTriplet ${isHidden ? 'full' : ''} ${darkMode ? 'dark-mode' : ''}`}>
                     <h2>Information</h2>
                     {Object.keys(patientData.info).map((property, index) => (
                         <p
@@ -36,7 +36,7 @@ function PatientBoxes({ patientData }) {
                     <Checklist />
                 </div>
 
-                <div className={`halfTriplet ${darkMode ? 'dark-mode' : ''}`}>
+                <div id="medicalHistory" className={`halfTriplet ${isHidden ? 'full' : ''} ${isHidden ? 'spaceLeft' : ''} ${darkMode ? 'dark-mode' : ''}`}>
                     <h2>History</h2>
                     <li>
                         <ul>
