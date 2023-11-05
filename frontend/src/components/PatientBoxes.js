@@ -22,7 +22,7 @@ function PatientBoxes({ patientData }) {
                         <p
                             key={index}
                         >
-                            <span style={{"font-weight" : "bold"}}>{property}:</span> {patientData.info[property]}
+                            <span className="importantInfo">{property}:</span> <span className="otherInfo">{patientData.info[property]}</span>
                         </p>
                     ))}
                 </div>
