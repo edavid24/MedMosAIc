@@ -25,7 +25,7 @@ function Patients() {
             <img id="darkIcon" className="darkButton" 
                     src={darkMode ? sun : night} // Use imported images here
                     alt={darkMode ? 'Sun Icon' : 'Moon Icon'}
-                    width="70" height="70" onClick={toggleDarkMode}/>
+                    width="50" height="50" onClick={toggleDarkMode}/>
             <Logo text="MedMosaic" />
             <div style={{ "margin": "5%", "margin-top": "2%"}}>
                 <PatientCard
