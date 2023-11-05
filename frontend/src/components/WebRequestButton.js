@@ -1,93 +1,101 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { XMLParser } from "fast-xml-parser";
-import './PatientMosaic.css'; // Create the corresponding CSS file
+import Warning from "./Warning.js";
+import Confirmation from "./Confirmation.js";
+import './PatientMosaic.css';
+import './WebRequestButton.css';
 
-function WebRequestButton() {
-    const [drugName, setDrug] = useState("");
-    const [buttonText, setButtonText] = useState('Add');
-    const [responseData, setResponseData] = useState('');
+function WebRequestButton({ importD, sendDrugs }) {
     const parser = new XMLParser();
-    const BASE_URL = " https://rxnav.nlm.nih.gov"
+    const BASE_URL = "https://rxnav.nlm.nih.gov";
 
-    const handleChange = (event) => {
-        const value = event.target.value;
-        setDrug(value);
-    };
+    const [warnings, setWarnings] = useState([]);
+    const [confirmations, setConfirmations] = useState([]);
+    const [drugs, setDrugs] = useState([]);
+    const [drugInput, setDrugInput] = useState("");
+
+    const updateDrugInput = (e) => {
+        setDrugInput(e.target.value);
+    }
+
+    useEffect(() => {
+        sendDrugs(drugs);
+    }, [ drugs ])
+
+    useEffect(() => { setDrugs(importD) } , [importD])
 
     const endpointURL = (endpoint, name, ids) => {
         var endpoints = {
             GETID: `/REST/drugs.xml?name=${name}`,
-            GETINTERACTION: `/REST/interaction/list.json?rxcuis=${ids}&sources=ONCHigh`
+            GETINTERACTION: `/REST/interaction/list.json?rxcuis=${ids}`
         }
         return BASE_URL + endpoints[endpoint];
     }
 
     const makeRequest = () => {
-        fetch(endpointURL("GETID", drugName, ""))
+        document.getElementById("drugName").value = ""; 
+        fetch(endpointURL("GETID", drugInput, ""))
             .then((response) => response.text())
             .then((xml) => {
-                var drugs = [];
+                var drugResults = [];
                 while (xml.search("<conceptProperties>") != -1) {
-                    drugs.push(parser.parse(xml.substring(xml.indexOf("<conceptProperties>"), xml.indexOf("</conceptProperties>")) + "</conceptProperties>"))
+                    drugResults.push(parser.parse(xml.substring(xml.indexOf("<conceptProperties>"), xml.indexOf("</conceptProperties>")) + "</conceptProperties>"))
                     xml = xml.substring(xml.indexOf("</conceptProperties>") + 15, xml.length);
                 }
 
-                var id1 = drugs[0].conceptProperties.rxcui;
-                var id2 = drugs[1].conceptProperties.rxcui;
-                fetch(endpointURL("GETINTERACTION", "", id1 + '+' + id2))
+                var ids = drugResults[0].conceptProperties.rxcui;
+                for (var i = 0; i < drugs.length; i++) {
+                    ids = `${ids}+${drugs[i].id}`;
+                }
+                fetch(endpointURL("GETINTERACTION", "", ids))
                     .then((res) => res.json())
-                    .then((bob) => {
-
-
-                        if (!("fullInteractionTypeGroup" in bob)) {
-                            setResponseData("No warnings!"); // Update the state with the response data
-                            setButtonText('Request Completed');
+                    .then((res) => {
+                        if (!("fullInteractionTypeGroup" in res)) {
+                            createConfirmation(); 
+                            setDrugs([...drugs, {name: drugInput, id: drugResults[0].conceptProperties.rxcui}]);
                             return;
                         }
-                        bob = bob.fullInteractionTypeGroup[0]
+                        res = res.fullInteractionTypeGroup[0]
 
-                        if (!("fullInteractionType" in bob)) {
-                            setResponseData("No warnings!")
-                            setButtonText('Request Completed');
+                        if (!("fullInteractionType" in res)) {
+                            createConfirmation(); 
+                            setDrugs([...drugs, {name: drugInput, id: drugResults[0].conceptProperties.rxcui}]);
                             return;
                         }
-                        setResponseData(bob.fullInteractionType[0].comment);
-                        setButtonText('Request Completed');
-
+                        createWarning(res.fullInteractionType[0].comment);
 
                     })
 
             })
             .catch((error) => {
                 console.error('Error:', error);
-                setButtonText('Request Failed');
             });
     };
+    
+    const createWarning = (e) => {
+       setWarnings([...warnings, e]);
+    }
+    const createConfirmation = () => {
+       setConfirmations([...confirmations, 1]);
+    }
+
 
     return (
         <div id='drugs'>
-            <h2>Edit Prescriptions</h2>
-            <input id="drugName" onChange={handleChange}></input>
-            <button className="submit" onClick={makeRequest}>{buttonText}</button>
-            <div>{responseData}</div>
-            <div>
-                Dosage:
-                <input></input>
-                Time:
-                <input></input>
+            <h2>Add Prescriptions</h2>
+            <input id="drugName" onChange={updateDrugInput} ></input>
+            <button className="submit" onClick={makeRequest}>Add</button>
+            <div id="warnings">
+                {warnings.map((item, index) => (
+                   <Warning key={index} errorMessage={item}/>
+                ))}
             </div>
-            <div>
-                <table>
-                    <tr>
-                        <th>
-                            Heroin
-                        </th>
-                        <th>
-                            10mg
-                        </th>
-                    </tr>
-                </table> 
+            <div id="confirmations">
+                {confirmations.map((item, index) => (
+                   <Confirmation key={index} />
+                ))}
             </div>
+            
         </div>
     );
 }

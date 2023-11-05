@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20pt;
+    text-align: right;
 }
 
 .checkbox {

@@ -7,10 +7,17 @@ import sun from '../components/sunIcon.png';
 
 function Patients() {
     const [darkMode, setDarkMode] = useState(false);
+
+    const [patients, setPatients] = useState([]);
+
     useEffect(() => {
         const initialDarkMode = localStorage.getItem('darkMode') === 'true';
         setDarkMode(initialDarkMode);
         document.body.classList.toggle('dark-mode', initialDarkMode);
+
+
+        makeRequest();
+
     }, []);
 
     const toggleDarkMode = () => {
@@ -19,6 +26,15 @@ function Patients() {
         localStorage.setItem('darkMode', !darkMode);
     };
 
+    const makeRequest = () => {
+        fetch("http://medmosaic.pythonanywhere.com/patients")
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                setPatients(json.documents);
+            })
+    }
+     
     return (
         
         <div className="App">
@@ -28,15 +44,15 @@ function Patients() {
                     width="50" height="50" onClick={toggleDarkMode}/>
             <Logo text="MedMosaic" />
             <div style={{ "margin": "5%", "margin-top": "2%"}}>
+                {patients.map((item, index) => (
                 <PatientCard
-                    name="Joe Mama"
+                    key={item.index}
+                    name={`${item.patient.first_name} ${item.patient.last_name}`}
+                    id={item.patient_id}
                     number="3B"
                     details="He's joe mama gotem"
-                /><PatientCard
-                    name="Adam"
-                    number="50A"
-                    details="The real OG"
                 />
+                ))}
             </div>
         </div>
     );

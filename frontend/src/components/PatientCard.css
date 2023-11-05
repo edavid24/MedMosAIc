@@ -24,7 +24,6 @@
 }
 
 .patient-card:hover {
-    border-width: 7px;
     border-color: #B8DEF4;
     background-color: #A9CFEF;
 }
