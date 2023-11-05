@@ -22,7 +22,8 @@ function PatientBoxes({ patientData }) {
                         <p
                             key={index}
                         >
-                            <span className="importantInfo">{property}:</span> <span className="otherInfo">{patientData.info[property]}</span>
+                            <span className={`importantInfo ${darkMode ? 'dark-mode' : ''}`}>{property}:</span> 
+                            <span className={`otherInfo ${darkMode ? 'dark-mode' : ''}`}>{patientData.info[property]}</span>
                         </p>
                     ))}
                 </div>
