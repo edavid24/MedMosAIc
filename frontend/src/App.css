@@ -91,6 +91,7 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
 }
 
 .logo {
+    width: 90%;
     font-family: 'Helvetica', sans-serif;
     font-size: 36px;
     font-weight: bold;
@@ -114,4 +115,17 @@ body.dark-mode {
 
 a {
     text-decoration: none;
+}
+
+.Top {
+    padding: 0;
+    margin: 0;
+    width: 70%;
+}
+
+.darkButton {
+    padding: 0;
+    margin-right: 30px;
+
+    float:right;
 }

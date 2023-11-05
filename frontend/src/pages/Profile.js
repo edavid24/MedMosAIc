@@ -15,6 +15,10 @@ function Profile() {
     };
     return (
         <div className="App">
+            <img id="darkIcon" className="darkButton" 
+                    src={darkMode ? sun : night} // Use imported images here
+                    alt={darkMode ? 'Sun Icon' : 'Moon Icon'}
+                    width="70" height="70" onClick={toggleDarkMode}/>
             <Logo text="MedMosaic" />
             <PatientMosaic patientData={patientData} />
         </div>
