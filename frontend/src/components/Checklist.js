@@ -3,6 +3,7 @@ import './Checklist.css';
 
 
 function Checklist({props}) {
+    const darkMode = localStorage.getItem('darkMode') === 'true';
 
     return (
         <div>
@@ -12,11 +13,11 @@ function Checklist({props}) {
                     <div className='checklist' key={index}>
                         {item.name}
                         <div className="listdown">
-                            <label className="container">Morning
+                            <label className={`container ${darkMode ? 'dark-mode' : ''}`}>Morning
                                 <span className="checkmark"></span>
                                 <input className="checkbox" type="checkbox" />
                             </label>
-                            <label className="container">Night
+                            <label className={`container ${darkMode ? 'dark-mode' : ''}`}>Night
                                 <span className="checkmark"></span>
                                 <input className="checkbox" type="checkbox" />
                             </label>

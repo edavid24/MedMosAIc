@@ -10,6 +10,7 @@ function PatientBoxes({ patientData }) {
     const [loaded, setLoaded] = useState([]);
     const parser = new XMLParser();
     const BASE_URL = "https://rxnav.nlm.nih.gov";
+    const darkMode = localStorage.getItem('darkMode') === 'true';
 
 
     useEffect(() => {
@@ -57,16 +58,20 @@ function PatientBoxes({ patientData }) {
 
     return (
         <div>
-            <div id="patient-name">{patientData.patient.first_name + " " + patientData.patient.last_name}</div>
+            <div id="patient-name" className={`${darkMode ? 'dark-mode' : ''}`}>{patientData.patient.first_name + " " + patientData.patient.last_name}</div>
             <div className="triplet-container">
-                <div className="triplet patient-mosaic">
+                <div className={`triplet patient-mosaic ${darkMode ? 'dark-mode' : ''}`}>
                     <h2>Patient Information</h2>
-                    <p><span style={{ "fontWeight": "bold" }}>Gender:</span> {patientData.demographics.gender.name}</p>
+                    <p>
+                        <span style={{ "fontWeight": "bold" }}>Gender:</span> 
+                        <span className={`${darkMode ? 'white' : ''}`} style={{ "float": "right" }}>{patientData.demographics.gender.name}</span>
+                    </p>
                     {Object.keys(patientData.vitals[0].results).map((property, index) => (
                         <p
                             key={index}
                         >
-                            <span style={{ "fontWeight": "bold" }}>{patientData.vitals[0].results[index].code.name}</span> {patientData.vitals[0].results[index].value} {patientData.vitals[0].results[index].unit}
+                            <span style={{ "fontWeight": "bold" }}>{patientData.vitals[0].results[index].code.name}:</span> 
+                            <span className={`${darkMode ? 'white' : ''}`} style={{ "float": "right" }}>{patientData.vitals[0].results[index].value} {patientData.vitals[0].results[index].unit}</span>
                         </p>
                     ))}
 
@@ -74,14 +79,15 @@ function PatientBoxes({ patientData }) {
                         <p
                             key={index}
                         >
-                            <span style={{ "fontWeight": "bold" }}>Allergy:</span> {patientData.allergies[index].reaction} ({patientData.allergies[index].severity})
+                            <span style={{ "fontWeight": "bold" }}>Allergy:</span> 
+                            <span className={`${darkMode ? 'white' : ''}`}  style={{ "float": "right" }}>{patientData.allergies[index].reaction} ({patientData.allergies[index].severity})</span>
                         </p>
                     ))}
                 </div>
-                <div className='triplet'>
+                <div className={`triplet ${darkMode ? 'dark-mode' : ''}`}>
                     <Checklist props={drugs} />
                 </div>
-                <div className={`triplet ${isHidden ? 'hide' : ''}`} id='editor'>
+                <div className={`triplet ${isHidden ? 'hide' : ''} ${darkMode ? 'dark-mode' : ''}`} id='editor'>
                     <WebRequestButton importD={loaded} sendDrugs={getData} />
                 </div>
             </div>

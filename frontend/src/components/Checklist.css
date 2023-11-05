@@ -5,6 +5,9 @@
     justify-content: space-between;
     margin-bottom: 20pt;
     text-align: right;
+
+    color: #555;
+    font-weight: bold;
 }
 
 .checkbox {
@@ -16,4 +19,13 @@
 .listdown {
     display: flex;
     flex-direction: column;
+}
+
+.container {
+    color: #555;
+    font-weight: normal;
+}
+
+.container.dark-mode {
+    color: white;
 }
